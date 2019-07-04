@@ -28,7 +28,7 @@ import nju.androidchat.client.component.OnRecallMessageRequested;
 @Log
 public class Mvp2TalkActivity extends AppCompatActivity implements Mvp2Contract.TalkView, TextView.OnEditorActionListener, OnRecallMessageRequested {
     private final static String pattern = "!\\[.*?\\]\\(.*?\\)";
-    private Mvp2Contract.TalkPresenter presenter;
+    private Mvp2Contract.TalkPresenter Presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +38,14 @@ public class Mvp2TalkActivity extends AppCompatActivity implements Mvp2Contract.
         Mvp2TalkModel mvp2TalkModel = new Mvp2TalkModel();
 
         // Create the presenter
-        this.presenter = new Mvp2TalkPresenter(mvp2TalkModel, this, new ArrayList<>());
-        mvp2TalkModel.setIMvp0TalkPresenter(this.presenter);
+        this.Presenter = new Mvp2TalkPresenter(mvp2TalkModel, this, new ArrayList<>());
+        mvp2TalkModel.setIMvp0TalkPresenter(this.Presenter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.start();
+        Presenter.start();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class Mvp2TalkActivity extends AppCompatActivity implements Mvp2Contract.
                         text = text.trim();
                         if (text.matches(pattern)) {
                             String imgURL = text.substring(text.indexOf('(') + 1, text.length() - 1);
-                            if (message.getSenderUsername().equals(this.presenter.getUsername())) {
+                            if (message.getSenderUsername().equals(this.Presenter.getUsername())) {
                                 content.addView(new ItemImgSend(this, imgURL, message.getMessageId(), this));
                                 //                              content.addView(new ItemImgSend(this,"http://news.sciencenet.cn/upload/news/images/2011/3/20113301123128272.jpg",message.getMessageId(),this));
 
@@ -71,7 +71,7 @@ public class Mvp2TalkActivity extends AppCompatActivity implements Mvp2Contract.
                                 content.addView(new ItemImgReceive(this, imgURL, message.getMessageId()));
                             }
                         } else {
-                            if (message.getSenderUsername().equals(this.presenter.getUsername())) {
+                            if (message.getSenderUsername().equals(this.Presenter.getUsername())) {
                                 content.addView(new ItemTextSend(this, text, message.getMessageId(), this));
 
                             } else {
@@ -88,8 +88,8 @@ public class Mvp2TalkActivity extends AppCompatActivity implements Mvp2Contract.
     }
 
     @Override
-    public void setPresenter(Mvp2Contract.TalkPresenter presenter) {
-        this.presenter = presenter;
+    public void setPresenter(Mvp2Contract.TalkPresenter Presenter) {
+        this.Presenter = Presenter;
     }
 
     @Override
@@ -118,7 +118,7 @@ public class Mvp2TalkActivity extends AppCompatActivity implements Mvp2Contract.
     private void sendText() {
         EditText text = findViewById(R.id.et_content);
         AsyncTask.execute(() -> {
-            this.presenter.sendMessage(text.getText().toString());
+            this.Presenter.sendMessage(text.getText().toString());
         });
         text.setText("");
     }
@@ -131,7 +131,7 @@ public class Mvp2TalkActivity extends AppCompatActivity implements Mvp2Contract.
     // 当用户长按消息，并选择撤回消息时做什么
     @Override
     public void onRecallMessageRequested(UUID messageId) {
-        this.presenter.recallMessage(messageId);
+        this.Presenter.recallMessage(messageId);
     }
 
 }

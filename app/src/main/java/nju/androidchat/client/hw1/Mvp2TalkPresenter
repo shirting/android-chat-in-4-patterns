@@ -10,14 +10,14 @@ import nju.androidchat.client.ClientMessage;
 @AllArgsConstructor
 public class Mvp2TalkPresenter implements Mvp2Contract.TalkPresenter {
 
-    private Mvp2Contract.TalkModel mvp2TalkModel;
-    private Mvp2Contract.TalkView iMvp2TalkView;
+    private Mvp2Contract.TalkModel Mvp2TalkModel;
+    private Mvp2Contract.TalkView IMvp2TalkView;
 
     private List<ClientMessage> clientMessages;
 
     @Override
     public void sendMessage(String content) {
-        ClientMessage clientMessage = mvp2TalkModel.sendInformation(content);
+        ClientMessage clientMessage = Mvp2TalkModel.sendInformation(content);
         refreshMessageList(clientMessage);
     }
 
@@ -28,12 +28,12 @@ public class Mvp2TalkPresenter implements Mvp2Contract.TalkPresenter {
 
     @Override
     public String getUsername() {
-        return mvp2TalkModel.getUsername();
+        return Mvp2TalkModel.getUsername();
     }
 
     private void refreshMessageList(ClientMessage clientMessage) {
         clientMessages.add(clientMessage);
-        iMvp2TalkView.showMessageList(clientMessages);
+        IMvp2TalkView.showMessageList(clientMessages);
     }
 
     //撤回消息，Mvp0暂不实现
@@ -49,10 +49,10 @@ public class Mvp2TalkPresenter implements Mvp2Contract.TalkPresenter {
             }
         }
         this.clientMessages = newMessages;
-        this.iMvp2TalkView.showMessageList(newMessages);
+        this.IMvp2TalkView.showMessageList(newMessages);
 
         // 操作数据
-        this.mvp2TalkModel.recallMessage(messageId);
+        this.Mvp2TalkModel.recallMessage(messageId);
 
     }
 

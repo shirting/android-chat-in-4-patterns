@@ -23,7 +23,7 @@ public class Mvp2TalkModel implements MessageListener, Mvp2Contract.TalkModel {
     private SocketClient client;
 
     @Setter
-    private Mvp2Contract.TalkPresenter iMvp0TalkPresenter;
+    private Mvp2Contract.TalkPresenter IMvp0TalkPresenter;
 
     public Mvp2TalkModel() {
         this.client = SocketClient.getClient();
@@ -63,13 +63,13 @@ public class Mvp2TalkModel implements MessageListener, Mvp2Contract.TalkModel {
                     serverSendMessage.getSenderUsername(),
                     serverSendMessage.getMessage()
             ));
-            iMvp0TalkPresenter.receiveMessage(new ClientMessage(serverSendMessage));
+            IMvp0TalkPresenter.receiveMessage(new ClientMessage(serverSendMessage));
         } else if (message instanceof ErrorMessage) {
             // 接收到服务器的错误消息
             log.severe("Server error: " + ((ErrorMessage) message).getErrorMessage());
         } else if (message instanceof RecallMessage) {
             // 接受到服务器的撤回消息，MVC-0不实现
-            iMvp0TalkPresenter.recallMessage(((RecallMessage) message).getMessageId());
+            IMvp0TalkPresenter.recallMessage(((RecallMessage) message).getMessageId());
         } else {
             // 不认识的消息
             log.severe("Unsupported message received: " + message.toString());

@@ -26,16 +26,16 @@ public class ItemImgReceive extends LinearLayout {
 
     private ImageView imageView;
     private Context context;
-    private UUID messageId;
+    private UUID MessId;
     private OnRecallMessageRequested onRecallMessageRequested;
     private String URL;
 
-    public ItemImgReceive(Context context, String URL, UUID messageId) {
+    public ItemImgReceive(Context context, String URL, UUID MessId) {
         super(context);
         this.context = context;
         inflate(context, R.layout.item_img_receive, this);
         this.imageView = findViewById(R.id.chat_item_content_img);
-        this.messageId = messageId;
+        this.MessId = MessId;
         setImgURL(URL);
     }
 
